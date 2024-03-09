@@ -1,3 +1,6 @@
+import logger from "winston";
+logger.add(new logger.transports.File({ filename: "development.log" }));
+
 export type Credentials = {
   client_id: string;
   client_secret: string;
@@ -33,7 +36,7 @@ const validateCredentials = (credentials: Credentials) => {
 };
 
 const setHeaders = (credentials: OauthCredentials) => {
-  console.info("Updating request header...");
+  logger.info("Updating request header...");
   return new Headers({
     Authorization: `Bearer ${credentials.access_token}`,
     // "Content-Type": "application/json",
@@ -62,7 +65,7 @@ export const getOauthCredentials = async (
     throw new Error("Failed to get access token from Reddit API");
   }
 
-  console.info("Access token received");
+  logger.info("Access token received");
   const data: OauthCredentials = await response.json();
   return data;
 };
@@ -79,7 +82,7 @@ const RedditApiClient = async (
     const url = `${BASE_URL}${path}`;
     const body = `id=${id}&spam=false`;
 
-    console.info("Removing listing: ", id);
+    logger.info("Removing listing: ", id);
 
     try {
       const response = await fetch(url, {
@@ -89,15 +92,15 @@ const RedditApiClient = async (
       });
 
       if (response.status === 200) {
-        console.log("Remove request successful");
+        logger.info("Remove request successful");
         return id;
       }
       const json_response = await response.json();
-      console.log(json_response);
-      console.info("Remove request failed");
+      logger.info(json_response);
+      logger.info("Remove request failed");
     } catch (error) {
-      console.info(`Error removing listing ${id}`);
-      console.error(error);
+      logger.info(`Error removing listing ${id}`);
+      logger.error(error);
     }
 
     return null;
@@ -113,10 +116,10 @@ const CreateRedditApiClient = (credentials: Credentials) => {
 
   return (async () => {
     if (!cachedClient) {
-      console.log("Requesting new token and creating client...");
+      logger.info("Requesting new token and creating client...");
       cachedClient = await RedditApiClient(credentials);
     } else {
-      console.log("Returning cached client...");
+      logger.info("Returning cached client...");
     }
     return cachedClient;
   })();

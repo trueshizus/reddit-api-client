@@ -1,10 +1,9 @@
-import * as dotenv from "dotenv";
-import * as repl from "repl";
+import dotenv from "dotenv";
+import repl from "repl";
 
 import CreateRedditApiClient from "../src/index";
 dotenv.config();
 
-console.log(process.env);
 const credentials = {
   client_id: process.env.REDDIT_CLIENT_ID!,
   client_secret: process.env.REDDIT_CLIENT_SECRET!,
@@ -12,10 +11,17 @@ const credentials = {
   password: process.env.REDDIT_PASSWORD!,
 };
 
-const client = CreateRedditApiClient(credentials);
+const startDevelopment = () => {
+  const createClient = async () => {
+    const client = await CreateRedditApiClient(credentials);
+    const replServer = repl.start({
+      prompt: "> ",
+    });
 
-const replServer = repl.start({
-  prompt: "> ",
-});
+    replServer.context.client = client;
+  };
 
-replServer.context.client = client;
+  return createClient();
+};
+
+startDevelopment();
