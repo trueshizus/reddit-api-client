@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
+    "dev": "ts-node example/index.ts",
     "test": "jest"
   },
   "author": "",
