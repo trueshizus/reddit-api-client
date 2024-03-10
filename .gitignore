@@ -1,3 +1,4 @@
 node_modules
 **/*.env
 **/*.log
+docs/api/v1/me.json
