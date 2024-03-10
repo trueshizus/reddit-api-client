@@ -13,11 +13,6 @@ export type Credentials = {
   password: string;
 };
 
-type ApiClient = {
-  me: () => Promise<string>;
-  remove: (id: string) => Promise<string | null>;
-};
-
 export type OauthCredentials = {
   access_token: string;
   token_type: string;
@@ -77,9 +72,58 @@ export const getOauthCredentials = async (credentials: Credentials) => {
   }
 };
 
-const RedditApiClient = async (
-  credentials: Credentials
-): Promise<ApiClient> => {
+const subredditClient = async (
+  BASE_URL: string,
+  HEADERS: Headers,
+  name: string
+) => {
+  const subreddit = name;
+
+  const modqueue = async (after?: string) => {
+    const path = `/r/${subreddit}/about/modqueue`;
+    const url = new URL(path, BASE_URL);
+    url.searchParams.append("limit", "100");
+    url.searchParams.append("raw_json", "1");
+
+    if (after) {
+      url.searchParams.append("after", after);
+    }
+
+    const response = await fetch(url.toString(), {
+      headers: HEADERS,
+    });
+
+    if (!response.ok) {
+      logger.error("Failed to fetch Mod Queue", response);
+      const text = await response.text();
+      throw new Error(text);
+    }
+
+    const resul = await response.json();
+
+    const next = () => {
+      const nextPage = resul?.data?.after;
+      if (nextPage) {
+        return modqueue(nextPage);
+      } else {
+        return null;
+      }
+    };
+
+    const listing = () => resul.data.children;
+
+    return {
+      next,
+      listing,
+    };
+  };
+
+  return {
+    modqueue,
+  };
+};
+
+const RedditApiClient = async (credentials: Credentials) => {
   const BASE_URL = "https://oauth.reddit.com";
 
   const oauthCredentials = await getOauthCredentials(credentials);
@@ -89,6 +133,8 @@ const RedditApiClient = async (
   }
 
   const HEADERS = setHeaders(oauthCredentials);
+
+  const subreddit = (name: string) => subredditClient(BASE_URL, HEADERS, name);
 
   const remove = async (id: string) => {
     const path = "/api/remove";
@@ -147,13 +193,14 @@ const RedditApiClient = async (
     return null;
   };
   return {
+    subreddit,
     me,
     remove: (id: string) => new Promise((resolve) => resolve("")),
   };
 };
 
 const CreateRedditApiClient = (credentials: Credentials) => {
-  let cachedClient: ApiClient | null = null;
+  let cachedClient;
   validateCredentials(credentials);
 
   return (async () => {

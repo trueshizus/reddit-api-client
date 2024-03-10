@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "after": {
+          "type": "string"
+        },
+        "dist": {
+          "type": "integer"
+        },
+        "modhash": {
+          "type": "null"
+        },
+        "geo_filter": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {}
+        },
+        "before": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "after",
+        "dist",
+        "modhash",
+        "geo_filter",
+        "children",
+        "before"
+      ]
+    }
+  },
+  "required": ["kind", "data"]
+}
