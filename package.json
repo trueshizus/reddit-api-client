@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --exec ts-node --loader ts-node/esm dev/index.ts",
+    "dev": "nodemon --exec ts-node dev/index.ts",
     "test": "jest"
   },
   "author": "",
