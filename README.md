@@ -22,6 +22,22 @@
 - get reddit credentials.
 - usage examples
 
+## Example
+
+```typescript
+const credentials = {
+  client_id: "999999999",
+  client_secret: "8888888",
+  username: "myAccount",
+  password: "myPassword",
+};
+
+const client = await CreateRedditApiClient(credentials);
+const me = await client.me();
+
+console.log(me);
+```
+
 ## Testing
 
 `npm run test`
