@@ -6,6 +6,11 @@ if (process.env.NODE_ENV == "development") {
   logger.add(console).add(files);
 }
 
+if (process.env.NODE_ENV == "test") {
+  const files = new logger.transports.File({ filename: "test.log" });
+  logger.add(files);
+}
+
 export type Credentials = {
   client_id: string;
   client_secret: string;
