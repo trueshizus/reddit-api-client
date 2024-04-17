@@ -1,40 +1,34 @@
-# Reddit Api Client
+# Reddit API Client
+
+A typescript client to interact with the Reddit API
 
 ## Getting Started
 
 1. Clone the repository
 
-`git clone git@github.com:trueshizus/reddit-api-client.git`
+```bash
+git clone git@github.com:trueshizus/reddit-api-client.git
+```
 
 2. Get your [Reddit Credentials](https://old.reddit.com/prefs/apps/).
-
 3. Rename `.env.sample` to `.env` and change the values with your credentials.
 
 4. Run npm install
 
-`npm i`
+```bash
+npm i
+```
 
-5. To use the client for the command line use:
+## How to use it
 
-`npm run dev`
+### Using the CLI
 
-- install package
-- get reddit credentials.
-- usage examples
-
-## Example
+```bash
+npm run dev
+```
 
 ```typescript
-const credentials = {
-  client_id: "999999999",
-  client_secret: "8888888",
-  username: "myAccount",
-  password: "myPassword",
-};
-
-const client = await CreateRedditApiClient(credentials);
 const me = await client.me();
-
 console.log(me);
 ```
 
