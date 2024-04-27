@@ -15,26 +15,10 @@ export type OauthCredentials = {
   created_at: number;
 };
 
-const validateCredentials = (credentials: Credentials) => {
-  if (!credentials?.client_id) {
-    throw new Error("client_id is required");
-  }
-  if (!credentials?.client_secret) {
-    throw new Error("client_secret is required");
-  }
-  if (!credentials?.username) {
-    throw new Error("username is required");
-  }
-  if (!credentials?.password) {
-    throw new Error("password is required");
-  }
-};
-
 const setHeaders = (credentials: OauthCredentials) => {
   logger.info("Updating request header...");
   return new Headers({
     Authorization: `Bearer ${credentials.access_token}`,
-    // "Content-Type": "application/json",
     "Content-Type": "application/x-www-form-urlencoded",
     "User-Agent": "web:argentina-modtools:v0.0.1 (by /u/BotonAr)",
   });
@@ -76,7 +60,7 @@ const subredditClient = async (
   const modqueue = async (after?: string) => {
     const path = `/r/${subreddit}/about/modqueue`;
     const url = new URL(path, BASE_URL);
-    url.searchParams.append("limit", "100");
+    url.searchParams.append("limit", "10");
     url.searchParams.append("raw_json", "1");
 
     if (after) {
@@ -186,6 +170,7 @@ const redditApiClient = async (credentials: Credentials) => {
 
     return null;
   };
+
   return {
     subreddit,
     me,
