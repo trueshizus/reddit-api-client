@@ -17,5 +17,10 @@ new Elysia()
     const modqueue = await subreddit.modqueue();
     return modqueue.listing();
   })
+  .get("/feed", async () => {
+    const subreddit = await client.subreddit("argentina");
+    const feed = await subreddit.feed({ limit: 10, after: "" });
+    return feed.listing();
+  })
   .get("/me", async () => await client.me())
   .listen(3000);

@@ -96,7 +96,48 @@ const subredditClient = async (
     };
   };
 
+  const feed = async (params: { limit: number; after: string }) => {
+    const { limit, after } = params;
+    const path = `/r/${subreddit}/new`;
+    const url = new URL(path, BASE_URL);
+    url.searchParams.append("limit", limit.toString());
+    url.searchParams.append("raw_json", "1");
+
+    if (after) {
+      url.searchParams.append("after", after);
+    }
+
+    const response = await fetch(url.toString(), {
+      headers: HEADERS,
+    });
+
+    if (!response.ok) {
+      logger.error("Failed to fetch feed", response);
+      const text = await response.text();
+      throw new Error(text);
+    }
+
+    const resul = await response.json();
+
+    const next = () => {
+      const nextPage = resul?.data?.after;
+      if (nextPage) {
+        return feed(nextPage);
+      } else {
+        return null;
+      }
+    };
+
+    const listing = () => resul.data.children;
+
+    return {
+      next,
+      listing,
+    };
+  };
+
   return {
+    feed,
     modqueue,
   };
 };
