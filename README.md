@@ -1,6 +1,6 @@
 # Reddit API Client
 
-A typescript client to interact with the Reddit API
+Interact with Reddit API. Built with [Bun](https://bun.sh/) and [Typescript](https://www.typescriptlang.org/).
 
 ## Getting Started
 
@@ -16,21 +16,29 @@ git clone git@github.com:trueshizus/reddit-api-client.git
 4. Run npm install
 
 ```bash
-npm i
+bun install
 ```
 
 ## How to use it
 
-### Using the CLI
-
-```bash
-npm run dev
-```
+Set up your credentials and instantiate the client;
 
 ```typescript
-const me = await client.me();
+import RedditAPIClient from 'reddit-api-client'
+
+const credentials = {
+  client_id: env.REDDIT_CLIENT_ID!,
+  client_secret: env.REDDIT_CLIENT_SECRET!,
+  username: env.REDDIT_USERNAME!,
+  password: env.REDDIT_PASSWORD!,
+};
+
+const client = await RedditAPIClient(credentials);
+const me = await client.me()
+
 console.log(me);
 ```
+
 
 ## Testing
 
