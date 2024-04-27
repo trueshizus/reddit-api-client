@@ -219,7 +219,7 @@ const redditApiClient = async (credentials: Credentials) => {
   };
 };
 
-const createRedditApiClient = (credentials: Credentials) => {
+const RedditApiClient = (credentials: Credentials) => {
   let client: Awaited<ReturnType<typeof redditApiClient>>;
 
   const createClient = async () => {
@@ -235,4 +235,4 @@ const createRedditApiClient = (credentials: Credentials) => {
   return createClient();
 };
 
-export default createRedditApiClient;
+export default RedditApiClient;

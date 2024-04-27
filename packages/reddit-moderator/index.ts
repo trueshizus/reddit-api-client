@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
-import createRedditApiClient from "..";
-import env from "../env";
+import RedditApiClient from "api-client";
+import env from "@/env";
 
 const credentials = {
   client_id: env.REDDIT_CLIENT_ID!,
@@ -9,7 +9,7 @@ const credentials = {
   password: env.REDDIT_PASSWORD!,
 };
 
-const client = await createRedditApiClient(credentials);
+const client = await RedditApiClient(credentials);
 
 new Elysia()
   .get("/mod", async () => {

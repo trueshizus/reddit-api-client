@@ -24,7 +24,7 @@ bun install
 Set up your credentials and instantiate the client;
 
 ```typescript
-import RedditAPIClient from 'reddit-api-client'
+import RedditApiClient from 'api-client'
 
 const credentials = {
   client_id: env.REDDIT_CLIENT_ID!,
@@ -33,7 +33,7 @@ const credentials = {
   password: env.REDDIT_PASSWORD!,
 };
 
-const client = await RedditAPIClient(credentials);
+const client = await RedditApiClient(credentials);
 const me = await client.me()
 
 console.log(me);
