@@ -1,6 +1,9 @@
-import { Elysia } from "elysia";
-import RedditApiClient from "api-client";
 import env from "@/env";
+import { html } from "@elysiajs/html";
+
+import { Elysia } from "elysia";
+import Modque from "./components/Modqueue";
+import RedditApiClient from "api-client/RedditApiClient";
 
 const credentials = {
   client_id: env.REDDIT_CLIENT_ID!,
@@ -15,7 +18,7 @@ new Elysia()
   .get("/mod", async () => {
     const subreddit = await client.subreddit("argentina");
     const modqueue = await subreddit.modqueue();
-    return modqueue.listing();
+    return modqueue.listings();
   })
   .get("/feed", async () => {
     const subreddit = await client.subreddit("argentina");
@@ -23,4 +26,10 @@ new Elysia()
     return feed.listing();
   })
   .get("/me", async () => await client.me())
+  .use(html())
+  .get("/moderate", async () => {
+    const subreddit = await client.subreddit("argentina");
+    const modqueue = await subreddit.modqueue();
+    return <Modque modqueue={modqueue} />;
+  })
   .listen(3000);

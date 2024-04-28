@@ -4,9 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun --watch packages/reddit-moderator/index.ts",
-    "build": "bun build src/index.ts",
-    "start": "NODE_ENV=production bun src/index.ts",
+    "dev": "bun --watch packages/reddit-moderator/index.tsx",
     "test": "bun test"
   },
   "devDependencies": {
@@ -16,6 +14,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@elysiajs/html": "^1.0.2",
     "pino": "^8.20.0",
     "zod": "^3.22.4"
   }
