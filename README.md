@@ -42,4 +42,4 @@ console.log(me);
 
 ## Testing
 
-`npm run test`
+`bun test`

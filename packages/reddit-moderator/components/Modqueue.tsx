@@ -8,11 +8,13 @@ export default function Modque({ modqueue }: Props) {
   const listings = modqueue.listings();
 
   return (
-    <>
-      {listings.map(({ data }) => {
-        const { subreddit_id } = data;
-        return <div>{subreddit_id}</div>;
-      })}
-    </>
+    <main>
+      <ul>
+        {listings.map(({ data }) => {
+          const { subreddit_id } = data;
+          return <li>{subreddit_id}</li>;
+        })}
+      </ul>
+    </main>
   );
 }

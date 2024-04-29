@@ -4,6 +4,7 @@ import { html } from "@elysiajs/html";
 import { Elysia } from "elysia";
 import Modque from "./components/Modqueue";
 import RedditApiClient from "api-client/RedditApiClient";
+import { Layout } from "./components/Layout";
 
 const credentials = {
   client_id: env.REDDIT_CLIENT_ID!,
@@ -30,6 +31,10 @@ new Elysia()
   .get("/moderate", async () => {
     const subreddit = await client.subreddit("argentina");
     const modqueue = await subreddit.modqueue();
-    return <Modque modqueue={modqueue} />;
+    return (
+      <Layout>
+        <Modque modqueue={modqueue} />
+      </Layout>
+    );
   })
   .listen(3000);
