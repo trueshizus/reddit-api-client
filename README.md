@@ -39,7 +39,6 @@ const me = await client.me()
 console.log(me);
 ```
 
-
 ## Testing
 
 `bun test`

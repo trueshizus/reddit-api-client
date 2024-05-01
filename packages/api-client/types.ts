@@ -1,8 +1,8 @@
 export type Listing = {
   kind: string;
   data: {
-    id: string;
-    subreddit_id: string;
+    name: string;
+    thumbnail: string;
   };
 };
 
