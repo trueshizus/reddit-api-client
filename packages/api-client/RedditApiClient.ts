@@ -1,7 +1,5 @@
 import type { Listing, Modqueue } from "./types";
 
-const logger = require("pino")();
-
 export type Credentials = {
   client_id: string;
   client_secret: string;
@@ -18,7 +16,7 @@ export type OauthCredentials = {
 };
 
 const setHeaders = (credentials: OauthCredentials) => {
-  logger.info("Updating request header...");
+  console.info("Updating request header...");
   return new Headers({
     Authorization: `Bearer ${credentials.access_token}`,
     "Content-Type": "application/x-www-form-urlencoded",
@@ -43,12 +41,12 @@ export const getOauthCredentials = async (credentials: Credentials) => {
 
     const data: OauthCredentials = await response.json();
 
-    logger.info("Access token received");
+    console.info("Access token received");
 
-    logger.info("respose: ", data);
+    console.info("respose: ", data);
     return data;
   } catch (error) {
-    logger.error("Failed to get access token from Reddit API: ", error);
+    console.error("Failed to get access token from Reddit API: ", error);
   }
 };
 
@@ -74,7 +72,7 @@ const subredditClient = async (
     });
 
     if (!response.ok) {
-      logger.error("Failed to fetch Mod Queue", response);
+      console.error("Failed to fetch Mod Queue", response);
       const text = await response.text();
       throw new Error(text);
     }
@@ -115,7 +113,7 @@ const subredditClient = async (
     });
 
     if (!response.ok) {
-      logger.error("Failed to fetch feed", response);
+      console.error("Failed to fetch feed", response);
       const text = await response.text();
       throw new Error(text);
     }
@@ -163,7 +161,7 @@ const redditApiClient = async (credentials: Credentials) => {
     const url = `${BASE_URL}${path}`;
     const body = `id=${id}&spam=false`;
 
-    logger.info("Removing listing: ", id);
+    console.info("Removing listing: ", id);
 
     try {
       const response = await fetch(url, {
@@ -173,15 +171,15 @@ const redditApiClient = async (credentials: Credentials) => {
       });
 
       if (response.status === 200) {
-        logger.info("Remove request successful");
+        console.info("Remove request successful");
         return id;
       }
       const json_response = await response.json();
-      logger.info(json_response);
-      logger.info("Remove request failed");
+      console.info(json_response);
+      console.info("Remove request failed");
     } catch (error) {
-      logger.info(`Error removing listing ${id}`);
-      logger.error(error);
+      console.info(`Error removing listing ${id}`);
+      console.error(error);
     }
 
     return null;
@@ -191,7 +189,7 @@ const redditApiClient = async (credentials: Credentials) => {
     const path = "/api/v1/me";
     const url = `${BASE_URL}${path}`;
 
-    logger.info(`GET ${path}`);
+    console.info(`GET ${path}`);
 
     try {
       const response = await fetch(url, {
@@ -200,16 +198,16 @@ const redditApiClient = async (credentials: Credentials) => {
       });
 
       if (response.status === 200) {
-        logger.info("identity request successful successful");
+        console.info("identity request successful successful");
       }
 
       const json_response = await response.json();
-      logger.info("response: ", json_response);
+      console.info("response: ", json_response);
 
       return json_response;
     } catch (error) {
-      logger.info(`Error requesting identity`);
-      logger.error(error);
+      console.info(`Error requesting identity`);
+      console.error(error);
     }
 
     return null;
@@ -227,10 +225,10 @@ const RedditApiClient = (credentials: Credentials) => {
 
   const createClient = async () => {
     if (!client) {
-      logger.info("Requesting new token and creating client...");
+      console.info("Requesting new token and creating client...");
       client = await redditApiClient(credentials);
     } else {
-      logger.info("Returning cached client...");
+      console.info("Returning cached client...");
     }
     return client;
   };

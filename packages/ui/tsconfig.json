@@ -5,6 +5,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
+    "jsx": "react-jsx",
     "allowJs": true,
 
     // Bundler mode
@@ -21,11 +22,6 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
-
-    // React
-    "jsx": "react",
-    "jsxFactory": "Html.createElement",
-    "jsxFragmentFactory": "Html.Fragment"
+    "noPropertyAccessFromIndexSignature": false
   }
 }

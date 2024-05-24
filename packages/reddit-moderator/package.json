@@ -2,7 +2,7 @@
   "name": "reddit-moderator",
   "version": "1.0.0",
   "dependencies": {
-    "elysia": "^1.0.15",
-    "api-client": "workspace:*"
+    "@elysiajs/html": "^1.0.2",
+    "elysia": "^1.0.15"
   }
 }

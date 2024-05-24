@@ -1,4 +1,3 @@
-import env from "@/env";
 import { html } from "@elysiajs/html";
 
 import { Elysia } from "elysia";
@@ -7,10 +6,10 @@ import RedditApiClient from "api-client/RedditApiClient";
 import { Layout } from "./components/Layout";
 
 const credentials = {
-  client_id: env.REDDIT_CLIENT_ID!,
-  client_secret: env.REDDIT_CLIENT_SECRET!,
-  username: env.REDDIT_USERNAME!,
-  password: env.REDDIT_PASSWORD!,
+  client_id: Bun.env.REDDIT_CLIENT_ID!,
+  client_secret: Bun.env.REDDIT_CLIENT_SECRET!,
+  username: Bun.env.REDDIT_USERNAME!,
+  password: Bun.env.REDDIT_PASSWORD!,
 };
 
 const client = await RedditApiClient(credentials);
