@@ -42,3 +42,8 @@ console.log(me);
 ## Testing
 
 `bun test`
+
+
+## Thougths
+
+Reddit Argentina debería ser el frontpage de Internet.

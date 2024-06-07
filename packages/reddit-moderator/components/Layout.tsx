@@ -1,18 +1,21 @@
-export function Layout(props: Html.PropsWithChildren<{}>) {
+// This component is the layout for the entire application. It includes the header, footer, and the main content area.
+
+import React from "react";
+
+type Props = {
+  children?: React.ReactNode;
+};
+
+export default function Layout({ children }: Props): React.ReactElement {
   return (
-    <>
-      {"<!doctype html>"}
-      <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <link rel="stylesheet" href="styles.css" />
-        </head>
-        <body>{props.children}</body>
-      </html>
-    </>
+    <div>
+      <header>
+        <h1>Reddit Moderator</h1>
+      </header>
+      <main>{children}</main>
+      <footer>
+        <p>&copy; 2021 Reddit Moderator</p>
+      </footer>
+    </div>
   );
 }
