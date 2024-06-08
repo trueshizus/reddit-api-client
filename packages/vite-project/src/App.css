@@ -18,7 +18,8 @@
 
 
 .feed {
-    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
 }
 
 .feed input[type="radio"] {
