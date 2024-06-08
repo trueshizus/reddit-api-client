@@ -1,9 +1,10 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, version } from "react";
 import reactLogo from "./assets/react.svg";
 
 import Post from "./componets/post";
 import PostFeed from "./componets/posts-feed";
 import "./App.css";
+import React from "react";
 
 // Works also with SSR as expected
 const Card = lazy(() => import("./Card"));
@@ -106,9 +107,27 @@ const removedPosts = [
   },
 ];
 function App({}) {
+  const removedQueueRef = React.useRef<HTMLInputElement>(null);
+  const pendingQueueRef = React.useRef<HTMLInputElement>(null);
+  const approvedQueueRef = React.useRef<HTMLInputElement>(null);
+
+  const queueRefs = [removedQueueRef, pendingQueueRef, approvedQueueRef];
+
+  useEffect(() => {
+    const onKeyPress = (event: { key: any }) => {
+      const key = event.key;
+      approvedQueueRef?.current?.focus();
+      console.log("Key pressed:", key);
+    };
+    document.addEventListener("keydown", onKeyPress);
+    return () => {
+      document.removeEventListener("keydown", onKeyPress);
+    };
+  }, []);
+
   return (
     <>
-      <h1>RedditUI</h1>
+      <h1>RedditUI {version}</h1>
       <div className="queues">
         <div className="queue removed">
           <h2>Remove</h2>
