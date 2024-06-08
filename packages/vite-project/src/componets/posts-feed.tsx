@@ -6,7 +6,7 @@ type Props = {
 
 export default function PostFeed({ posts }: Props) {
   return (
-    <div className="radio-toolbar">
+    <div className="feed">
       <fieldset id="looperGroup">
         {posts.map((post) => (
           <div key={post.id}>
