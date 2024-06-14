@@ -4,10 +4,10 @@ type Post = {
   content: string;
 };
 
-const Post = ({ title, content }: Post) => {
+const Post = ({ id, title, content }: Post) => {
   return (
-    <article className="post">
-      <h2>{title}</h2>
+    <article id={`post-${id}`} className="post">
+      <h3>{title}</h3>
       <p>{content}</p>
     </article>
   );

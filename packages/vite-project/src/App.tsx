@@ -1,13 +1,7 @@
-import { Suspense, lazy, useEffect, version } from "react";
-import reactLogo from "./assets/react.svg";
+import { lazy, version } from "react";
 
-import Post from "./componets/post";
-import PostFeed from "./componets/posts-feed";
 import "./App.css";
-import React from "react";
-
-// Works also with SSR as expected
-const Card = lazy(() => import("./Card"));
+import Queue from "./componets/queue";
 
 const pendingPosts = [
   {
@@ -107,44 +101,14 @@ const removedPosts = [
   },
 ];
 function App({}) {
-  const removedQueueRef = React.useRef<HTMLInputElement>(null);
-  const pendingQueueRef = React.useRef<HTMLInputElement>(null);
-  const approvedQueueRef = React.useRef<HTMLInputElement>(null);
-
-  const queueRefs = [removedQueueRef, pendingQueueRef, approvedQueueRef];
-
-  useEffect(() => {
-    const onKeyPress = (event: { key: any }) => {
-      const key = event.key;
-      approvedQueueRef?.current?.focus();
-      console.log("Key pressed:", key);
-    };
-    document.addEventListener("keydown", onKeyPress);
-    return () => {
-      document.removeEventListener("keydown", onKeyPress);
-    };
-  }, []);
-
   return (
     <>
       <h1>RedditUI {version}</h1>
-      <div className="queues">
-        <div className="queue removed">
-          <h2>Remove</h2>
-          <PostFeed posts={removedPosts} name={"remove"}></PostFeed>
-        </div>
-        <div className="queue pending">
-          <h2>Pending</h2>
-          <PostFeed posts={pendingPosts} name={"pending"}></PostFeed>
-        </div>
-        <div className="queue approved">
-          <h2>Approve</h2>
-          <PostFeed posts={approvedPosts} name={"approved"}></PostFeed>
-        </div>
-      </div>
-      {/* <Suspense fallback={<p>Loading card component...</p>}>
-        <Card />
-      </Suspense> */}
+      <main className="queues">
+        <Queue posts={removedPosts} name={"remove"}></Queue>
+        <Queue posts={pendingPosts} name={"pending"}></Queue>
+        <Queue posts={approvedPosts} name={"approved"}></Queue>
+      </main>
     </>
   );
 }
