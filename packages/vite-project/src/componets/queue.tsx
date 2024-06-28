@@ -20,6 +20,9 @@ export default function Queue({ posts, name }: Props) {
             />
             <label htmlFor={`post-${post.id}-radio`}>
               <Post key={post.id} {...post} />
+              <button>Remove</button>
+              <button>Approve</button>
+              <button>Move to Pending</button>
             </label>
           </div>
         ))}

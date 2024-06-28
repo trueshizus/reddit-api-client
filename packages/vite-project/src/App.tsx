@@ -1,9 +1,9 @@
-import { lazy, version } from "react";
+import { useState, version } from "react";
 
 import "./App.css";
 import Queue from "./componets/queue";
 
-const pendingPosts = [
+const pendingPostsSample = [
   {
     id: 1,
     title: "Understanding JavaScript Closures",
@@ -35,7 +35,7 @@ const pendingPosts = [
   },
 ];
 
-const approvedPosts = [
+const approvedPostsSample = [
   {
     id: 6,
     title: "Advanced TypeScript Techniques",
@@ -68,7 +68,7 @@ const approvedPosts = [
   },
 ];
 
-const removedPosts = [
+const removedPostsSample = [
   {
     id: 11,
     title: "Understanding CSS Specificity",
@@ -100,7 +100,33 @@ const removedPosts = [
       "Understanding the benefits and challenges of serverless computing architectures.",
   },
 ];
-function App({}) {
+
+function App() {
+  const [removedPosts, setRemovedPosts] = useState(removedPostsSample);
+  const [pendingPosts, setPendingPosts] = useState(pendingPostsSample);
+  const [approvedPosts, setApprovedPosts] = useState(approvedPostsSample);
+
+  const removePost = (id: number) => {
+    const post = pendingPosts.find((post) => post.id === id);
+    if (!post) return;
+    setPendingPosts(pendingPosts.filter((post) => post.id !== id));
+    setRemovedPosts([post, ...removedPosts]);
+  };
+
+  const approvePost = (id: number) => {
+    const post = pendingPosts.find((post) => post.id === id);
+    if (!post) return;
+    setPendingPosts(pendingPosts.filter((post) => post.id !== id));
+    setApprovedPosts([post, ...approvedPosts]);
+  };
+
+  const moveToPending = (id: number) => {
+    const post = approvedPosts.find((post) => post.id === id);
+    if (!post) return;
+    setApprovedPosts(approvedPosts.filter((post) => post.id !== id));
+    setPendingPosts([post, ...pendingPosts]);
+  };
+
   return (
     <>
       <h1>RedditUI {version}</h1>
