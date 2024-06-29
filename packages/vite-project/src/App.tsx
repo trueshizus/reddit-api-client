@@ -1,4 +1,4 @@
-import { useState, version } from "react";
+import { useState } from "react";
 
 import "./App.css";
 import Queue from "./componets/queue";
@@ -129,7 +129,7 @@ function App() {
 
   return (
     <>
-      <h1>RedditUI {version}</h1>
+      <h1>RedditUI </h1>
       <main className="queues">
         <Queue posts={removedPosts} name={"remove"}></Queue>
         <Queue posts={pendingPosts} name={"pending"}></Queue>
